@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>마라톤 사진 찾기</title>
+<meta name="description" content="배번으로 2026 JTBC 서울마라톤 32km 지점 사진을 찾아보세요.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f6f4;--card:#fff;--ink:#1b1b1a;--mute:#66665f;--line:#deded8;--accent:#d9480f;--accent-ink:#fff;--t1:#1b1b1a;--t2:#d9480f;--sub:#3f3f3a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141413;--card:#1f1f1d;--ink:#f0f0ec;--mute:#a5a59c;--line:#34342f;--accent:#ff8a1f;--accent-ink:#1f1000;--t1:#fff;--t2:#ff8a1f;--sub:#e2e2dc}}
+:root[data-theme="dark"]{--bg:#141413;--card:#1f1f1d;--ink:#f0f0ec;--mute:#a5a59c;--line:#34342f;--accent:#ff8a1f;--accent-ink:#1f1000;--t1:#fff;--t2:#ff8a1f;--sub:#e2e2dc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:14px 16px 40px}
+h1{font-family:"Black Han Sans","Malgun Gothic",sans-serif;font-weight:400;font-size:clamp(18px,5.5vw,36px);line-height:1.3;margin:0 auto 4px;width:fit-content;text-align:center;background:linear-gradient(90deg,var(--t1),var(--t2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--sub);font-size:14px;line-height:1.35;margin:0 0 1px;text-align:center}
+.credit{color:var(--mute);font-size:12px;line-height:1.35;margin:0 0 20px;text-align:center}
+.credit p{margin:0}
+.links{display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin:0 0 10px;color:var(--mute);font-size:12px;line-height:1.35}
+@media (min-width:1000px){.links{position:absolute;top:14px;right:16px;margin:0}}
+.links div,.links a{display:flex;flex-direction:row-reverse;align-items:center;gap:5px;overflow-wrap:anywhere;color:inherit;text-decoration:none}
+.links a:hover{color:var(--ink)}
+.links svg{width:14px;height:14px;flex:none}
+form{display:flex;gap:8px}
+input{flex:1;min-width:0;font-size:20px;padding:13px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+button,.btn{font:inherit;font-weight:600;padding:12px 20px;border:0;border-radius:8px;background:var(--accent);color:var(--accent-ink);cursor:pointer;text-decoration:none;text-align:center}
+button.ghost{background:none;color:var(--accent);border:1px solid var(--line)}
+.lang{position:absolute;top:12px;left:16px;padding:3px 10px;font-size:12px;font-weight:600;line-height:1.5;background:none;color:var(--mute);border:1px solid var(--line);border-radius:999px}
+.tools{display:grid;grid-template-columns:auto 1fr;gap:8px;margin-bottom:8px}
+.tools button{padding:10px 14px;font-size:14px;white-space:nowrap}
+.how{display:flex;align-items:center;justify-content:center;padding:8px 10px;background:var(--card);border:1px solid var(--line);border-radius:8px;font-size:14px;line-height:1.35;text-align:center}
+.hero{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;margin-top:12px;background:#000;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.hero img{display:block;width:100%;height:100%;object-fit:cover}
+.hero.blank{background:var(--card);color:var(--mute);text-align:center;padding:16px}
+input::placeholder{font-size:16px}
+.hero[hidden]{display:none}
+h2{font-size:19px;margin:32px 0 4px}
+.note{color:var(--mute);font-size:14px;margin:0 0 12px}
+.head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:32px}
+.head h2{margin:0}
+.head button{padding:8px 14px;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:12px}
+.grid button{display:block;padding:0;background:var(--line);border-radius:6px;overflow:hidden}
+.grid img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover}
+.empty{padding:16px;background:var(--card);border:1px solid var(--line);border-radius:8px;margin-top:24px}
+footer{margin-top:24px;color:var(--mute);font-size:11px;line-height:1.5;text-align:center}
+#lb{position:fixed;inset:0;z-index:10;background:#000;color:#fff;display:flex;flex-direction:column}
+#lb[hidden]{display:none}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px}
+.bar button{background:none;color:#fff;padding:8px 12px;font-size:24px;line-height:1}
+.stage{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;touch-action:pan-y}
+.stage img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.45);color:#fff;font-size:26px;line-height:1;padding:14px 12px}
+#prev{left:8px}#next{right:8px}
+.acts{display:grid;grid-template-columns:2fr 1fr;gap:8px;padding:12px;max-width:560px;width:100%;margin:0 auto}
+.acts button{background:#333;color:#fff}
+@media (max-width:640px){.nav{display:none}.how{font-size:13px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <button class="lang" id="lang" type="button"></button>
+  <div class="links">
+    <a aria-label="인스타그램 @genghischan_" href="https://www.instagram.com/genghischan_/" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#feda75"/><stop offset=".35" stop-color="#fa7e1e"/><stop offset=".65" stop-color="#d62976"/><stop offset="1" stop-color="#4f5bd5"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="5.5" fill="url(#ig)"/><rect x="6" y="6" width="12" height="12" rx="3.5" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12" r="2.8" fill="none" stroke="#fff" stroke-width="1.8"/><circle cx="16" cy="8" r="1" fill="#fff"/></svg>@genghischan_</a>
+    <a aria-label="네이버 블로그" href="https://m.blog.naver.com/from_ethan" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" fill="#03c75a"/><path d="M7 7h3.4l3.2 4.8V7H17v10h-3.4l-3.2-4.8V17H7z" fill="#fff"/></svg>https://m.blog.naver.com/from_ethan</a>
+  </div>
+  <h1 data-t="title"></h1>
+  <p class="sub" id="sub"></p>
+  <div class="credit">
+    <p data-t="orig"></p>
+    <p data-t="until"></p>
+  </div>
+  <div class="tools">
+    <button class="ghost" id="more" type="button" data-t="all"></button>
+    <div class="how" data-t="how"></div>
+  </div>
+  <form id="f" role="search">
+    <input id="q" autocomplete="off" inputmode="text" >
+    <button data-t="find"></button>
+  </form>
+  <div class="hero" id="hero"></div>
+  <div id="out"></div>
+  <div id="end"></div>
+  <footer>
+    <span data-t="foot1"></span><br>
+    <span data-t="foot2"></span><br>
+    <span data-t="foot3"></span>
+  </footer>
+</div>
+<div id="lb" hidden role="dialog" aria-modal="true" aria-label="사진 크게 보기">
+  <div class="bar"><span id="cnt"></span><button id="close" type="button" aria-label="닫기">✕</button></div>
+  <div class="stage" id="stage">
+    <img id="big" alt="">
+    <button class="nav" id="prev" type="button" aria-label="이전 사진">‹</button>
+    <button class="nav" id="next" type="button" aria-label="다음 사진">›</button>
+  </div>
+  <div class="acts">
+    <a class="btn" id="save" rel="noopener" target="_blank" data-t="save"></a>
+    <button id="share" type="button" data-t="share"></button>
+  </div>
+</div>
+<script src="data.js"></script>
+<script src="search.js"></script>
+<script>
+var P = window.PHOTOS, PAGE = 60, out = document.getElementById('out'), hero = document.getElementById('hero'), more = document.getElementById('more'), shown = 0, browsing = false, allView = false;
+var lb = document.getElementById('lb'), big = document.getElementById('big'), cur = [], at = 0, opener = null;
+// 대회마다 고치는 곳: 메인 사진 파일 이름(비우면 빈 칸), 다운로드 마감일, 아래 T 의 doc, title, sub, hero
+var HERO_IMAGE = '';
+var DOWNLOAD_UNTIL = '20xx-12-xx';
+var T = {
+  ko: { doc: '2026 JTBC 서울마라톤 사진 찾기', title: '2026년 JTBC Seoul Marathon', sub: function (n) { return '32km, 탄천1교 지점 · 사진 ' + n + '장 · 사진 사용 시 인스타그램 혹은 SNS에 출처를 남겨주세요 · 무료'; }, until: '다운로드 기간 | ' + DOWNLOAD_UNTIL + ' 23시까지', orig: '원본을 따로 받고 싶으신 분은 인스타그램 DM 주세요', all: '전체 사진 보기', how: '배번 입력 → 사진 선택 → 저장', ph: '배번 입력 (예: A-19121, 19121)', find: '찾기', hero: '메인 사진 공간', foot1: 'AI가 사진 속 배번을 읽어 찾기 때문에, 배번이 가려지거나 잘린 사진은 검색되지 않을 수 있습니다.', foot2: '사진이 검색되지 않으면 전체보기를 통해 직접 찾으셔야 합니다.', foot3: '사진 삭제 요청: 인스타그램 @genghischan_으로 DM주세요', save: '사진 저장', share: '링크 공유', copied: '복사됨', other: 'English', bib: '배번', view: '사진 크게 보기', close: '닫기', prev: '이전 사진', next: '다음 사진', photo: '사진 ', allTitle: '전체 사진', short: '배번을 3자리 이상 입력해 주세요. 예: A-19121, 19121', found: function (n) { return '찾은 사진 ' + n + '장'; }, maybe: function (n) { return '혹시 이 사진인가요? ' + n + '장'; }, maybeNote: '번호 일부가 다르게 읽힌 사진입니다. 다른 분의 사진일 수 있어요.', none: '이 번호로 찾은 사진이 없습니다. 사진이 검색되지 않으면 전체보기를 통해 직접 찾으셔야 합니다.', shareTitle: '내 마라톤 사진' },
+  en: { doc: '2026 JTBC Seoul Marathon Photos', title: '2026 JTBC Seoul Marathon', sub: function (n) { return '32km, Tancheon 1-gyo Bridge · ' + n + ' photos · Please credit the source when sharing on social media · Free'; }, until: 'Download period | Until ' + DOWNLOAD_UNTIL + ' 23:00', orig: 'For original files, please send a DM on Instagram', all: 'All photos', how: 'Enter bib → Choose photo → Save', ph: 'Bib (e.g. A-19121, 19121)', find: 'Search', hero: 'Main photo', foot1: 'AI reads the bib numbers, so photos with a covered or cut-off bib may not appear in search results.', foot2: 'If your photo does not appear, please look through all photos.', foot3: 'To request photo removal, send a DM to @genghischan_ on Instagram', save: 'Save photo', share: 'Share link', copied: 'Copied', other: '한국어', bib: 'Bib number', view: 'View larger photo', close: 'Close', prev: 'Previous photo', next: 'Next photo', photo: 'Photo ', allTitle: 'All photos', short: 'Please enter at least 3 digits. e.g. A-19121, 19121', found: function (n) { return n + (n === 1 ? ' photo found' : ' photos found'); }, maybe: function (n) { return (n === 1 ? 'Could this be yours? ' : 'Could these be yours? ') + n; }, maybeNote: 'Part of the number was read differently, so these may be photos of someone else.', none: 'No photos found for this number. If your photo does not appear, please look through all photos.', shareTitle: 'My marathon photos' }
+};
+var lang = '', lastQ = null;
+try { lang = localStorage.getItem('lang') || ''; } catch (_) {}
+if (!T[lang]) lang = /^ko/i.test(navigator.language || 'ko') ? 'ko' : 'en';
+function t(k) { return T[lang][k]; }
+function applyLang() {
+  document.documentElement.lang = lang; document.title = t('doc');
+  document.querySelectorAll('[data-t]').forEach(function (el) { el.textContent = t(el.getAttribute('data-t')); });
+  var q = document.getElementById('q'); q.placeholder = t('ph'); q.setAttribute('aria-label', t('bib'));
+  document.getElementById('sub').textContent = t('sub')(P.length.toLocaleString());
+  document.getElementById('lang').textContent = t('other');
+  var hi = hero.querySelector('img'); if (hi) hi.alt = t('hero'); else hero.textContent = t('hero');
+  document.getElementById('close').setAttribute('aria-label', t('close'));
+  document.getElementById('prev').setAttribute('aria-label', t('prev'));
+  document.getElementById('next').setAttribute('aria-label', t('next'));
+  lb.setAttribute('aria-label', t('view'));
+  document.querySelectorAll('.grid button').forEach(function (b) { b.setAttribute('aria-label', t('view')); });
+  if (allView) { var h = out.querySelector('h2'); if (h) h.textContent = t('allTitle'); }
+  else if (lastQ !== null) run(lastQ);
+}
+function src(ph, w) { return 'https://drive.google.com/thumbnail?id=' + ph.i + '&sz=w' + w; }
+function grid(list, offset) {
+  var g = document.createElement('div'); g.className = 'grid';
+  list.forEach(function (ph, k) {
+    var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', t('view'));
+    var i = document.createElement('img');
+    i.loading = 'lazy'; i.alt = ''; i.referrerPolicy = 'no-referrer'; i.src = src(ph, 400);
+    b.append(i);
+    b.addEventListener('click', function () { opener = b; show(g.list, (offset || 0) + k, true); });
+    g.append(b);
+  });
+  return g;
+}
+function section(title, note, list) {
+  var h = document.createElement('h2'); h.textContent = title; out.append(h);
+  if (note) { var p = document.createElement('p'); p.className = 'note'; p.textContent = note; out.append(p); }
+  var g = grid(list); g.list = list; out.append(g);
+}
+function msg(t) { var d = document.createElement('div'); d.className = 'empty'; d.textContent = t; out.append(d); }
+function run(q) {
+  out.textContent = ''; shown = 0; browsing = false; allView = false; hero.hidden = true; lastQ = q;
+  var r = BibSearch.search(P, q);
+  if (!r) { msg(t('short')); return; }
+  if (r.exact.length) section(t('found')(r.exact.length), '', r.exact);
+  if (r.maybe.length) section(t('maybe')(r.maybe.length), t('maybeNote'), r.maybe);
+  if (!r.exact.length && !r.maybe.length) msg(t('none'));
+}
+function pageMore() {
+  var g = grid(P.slice(shown, shown + PAGE), shown); g.list = P; out.append(g); shown += PAGE;
+  browsing = shown < P.length;
+}
+function show(list, i, push) {
+  cur = list; at = (i + list.length) % list.length;
+  var ph = cur[at];
+  big.src = src(ph, 2000); big.alt = t('photo') + (at + 1);
+  document.getElementById('cnt').textContent = (at + 1) + ' / ' + cur.length;
+  document.getElementById('save').href = 'https://drive.google.com/uc?export=download&id=' + ph.i;
+  [1, -1].forEach(function (d) { if (cur.length > 1) new Image().src = src(cur[(at + d + cur.length) % cur.length], 2000); });
+  if (lb.hidden) {
+    lb.hidden = false; document.body.style.overflow = 'hidden';
+    if (push) try { history.pushState({ lb: 1 }, ''); } catch (_) {}
+    document.getElementById('close').focus();
+  }
+}
+function hide() {
+  if (lb.hidden) return;
+  lb.hidden = true; document.body.style.overflow = ''; big.removeAttribute('src');
+  if (opener) opener.focus();
+}
+document.getElementById('f').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var q = document.getElementById('q').value.trim();
+  run(q);
+  try { history.replaceState(null, '', '#' + encodeURIComponent(q)); } catch (_) {}
+});
+more.addEventListener('click', function () {
+  out.textContent = ''; shown = 0; browsing = false; lastQ = null;
+  if (allView) {
+    allView = false; hero.hidden = false; document.getElementById('q').value = '';
+    try { history.replaceState(null, '', location.pathname); } catch (_) {}
+    window.scrollTo(0, 0);
+    return;
+  }
+  allView = true; hero.hidden = true;
+  try { history.replaceState(null, '', location.pathname); } catch (_) {}
+  document.getElementById('q').value = '';
+  var h = document.createElement('h2'); h.textContent = t('allTitle'); out.append(h);
+  pageMore();
+});
+new IntersectionObserver(function (e) { if (e[0].isIntersecting && browsing) pageMore(); }, { rootMargin: '800px' }).observe(document.getElementById('end'));
+document.getElementById('close').addEventListener('click', function () { try { history.back(); } catch (_) {} hide(); });
+document.getElementById('prev').addEventListener('click', function () { show(cur, at - 1); });
+document.getElementById('next').addEventListener('click', function () { show(cur, at + 1); });
+window.addEventListener('popstate', hide);
+document.addEventListener('keydown', function (e) {
+  if (lb.hidden) return;
+  if (e.key === 'Escape') document.getElementById('close').click();
+  if (e.key === 'ArrowLeft') show(cur, at - 1);
+  if (e.key === 'ArrowRight') show(cur, at + 1);
+});
+var sx = null, stage = document.getElementById('stage');
+stage.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+stage.addEventListener('touchend', function (e) {
+  if (sx === null) return;
+  var dx = e.changedTouches[0].clientX - sx; sx = null;
+  if (Math.abs(dx) > 50) show(cur, at + (dx < 0 ? 1 : -1));
+});
+document.getElementById('share').addEventListener('click', function () {
+  var b = this, url = location.href;
+  if (navigator.share) { navigator.share({ title: t('shareTitle'), url: url }).catch(function () {}); return; }
+  try { navigator.clipboard.writeText(url).then(function () { b.textContent = t('copied'); setTimeout(function () { b.textContent = t('share'); }, 1500); }); } catch (_) {}
+});
+document.getElementById('lang').addEventListener('click', function () {
+  lang = lang === 'ko' ? 'en' : 'ko';
+  try { localStorage.setItem('lang', lang); } catch (_) {}
+  applyLang();
+});
+if (HERO_IMAGE) { var hm = new Image(); hm.src = HERO_IMAGE; hero.append(hm); } else hero.classList.add('blank');
+applyLang();
+var h0 = decodeURIComponent(location.hash.slice(1));
+if (h0) { document.getElementById('q').value = h0; run(h0); }
+</script>
+</body>
+</html>
