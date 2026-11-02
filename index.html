@@ -3,95 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>마라톤 사진 찾기</title>
-<meta name="description" content="배번으로 2026 JTBC 서울마라톤 32km 지점 사진을 찾아보세요.">
-<style>
-:root{--bg:#f6f6f4;--card:#fff;--ink:#1b1b1a;--mute:#66665f;--line:#deded8;--accent:#0b5cad;--accent-ink:#fff}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141413;--card:#1f1f1d;--ink:#f0f0ec;--mute:#a5a59c;--line:#34342f;--accent:#6db0f2;--accent-ink:#0c1a28}}
-:root[data-theme="dark"]{--bg:#141413;--card:#1f1f1d;--ink:#f0f0ec;--mute:#a5a59c;--line:#34342f;--accent:#6db0f2;--accent-ink:#0c1a28}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
-.wrap{max-width:1040px;margin:0 auto;padding:32px 16px 56px}
-h1{font-size:26px;line-height:1.3;margin:0 0 4px}
-.sub{color:var(--mute);margin:0 0 24px}
-form{display:flex;gap:8px}
-input{flex:1;min-width:0;font-size:20px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
-button{font:inherit;font-weight:600;padding:12px 20px;border:0;border-radius:8px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
-button.ghost{background:none;color:var(--accent);border:1px solid var(--line)}
-.hint{color:var(--mute);font-size:14px;margin:8px 0 0}
-h2{font-size:18px;margin:32px 0 4px}
-.note{color:var(--mute);font-size:14px;margin:0 0 12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:12px}
-.grid a{display:block;background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden;color:inherit;text-decoration:none}
-.grid img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;background:var(--line)}
-.grid span{display:block;padding:4px 8px;font-size:12px;color:var(--mute)}
-.empty{padding:16px;background:var(--card);border:1px solid var(--line);border-radius:8px;margin-top:24px}
-.row{margin-top:32px;display:flex;justify-content:center}
-footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
-footer a{color:var(--accent)}
-</style>
+<meta name="robots" content="noindex">
+<title>2026 JTBC 서울마라톤 사진 찾기</title>
+<link rel="canonical" href="https://meanfoto.com/2026-jtbc">
+<script>location.replace('https://meanfoto.com/2026-jtbc' + location.hash);</script>
+<noscript><meta http-equiv="refresh" content="0;url=https://meanfoto.com/2026-jtbc"></noscript>
 </head>
 <body>
-<div class="wrap">
-  <h1>마라톤 사진 찾기</h1>
-  <p class="sub">2026 JTBC 서울마라톤 32km 지점 · 사진 <span id="total"></span>장</p>
-  <form id="f" role="search">
-    <input id="q" autocomplete="off" placeholder="배번 입력 (예: E-19121)" aria-label="배번">
-    <button>찾기</button>
-  </form>
-  <p class="hint">영문 없이 숫자만 입력해도 됩니다. 사진을 누르면 구글드라이브 원본이 열립니다.</p>
-  <div id="out"></div>
-  <div class="row"><button class="ghost" id="more" type="button">전체 사진 보기</button></div>
-  <footer>
-    AI가 사진 속 배번을 읽어 찾기 때문에, 배번이 가려지거나 잘린 사진은 검색되지 않을 수 있습니다. 못 찾으면 전체 사진 보기를 이용해 주세요.<br>
-    사진 삭제 요청: <a href="https://www.instagram.com/genghischan_/" rel="noopener">인스타그램 @genghischan_</a>
-  </footer>
-</div>
-<script src="data.js"></script>
-<script src="search.js"></script>
-<script>
-var P = window.PHOTOS, PAGE = 60, out = document.getElementById('out'), more = document.getElementById('more'), shown = 0;
-document.getElementById('total').textContent = P.length.toLocaleString();
-function grid(list) {
-  var g = document.createElement('div'); g.className = 'grid';
-  list.forEach(function (ph) {
-    var a = document.createElement('a');
-    a.href = 'https://drive.google.com/file/d/' + ph.i + '/view'; a.target = '_blank'; a.rel = 'noopener';
-    var i = document.createElement('img');
-    i.loading = 'lazy'; i.alt = '사진 ' + ph.n; i.referrerPolicy = 'no-referrer';
-    i.src = 'https://drive.google.com/thumbnail?id=' + ph.i + '&sz=w400';
-    var s = document.createElement('span'); s.textContent = ph.n;
-    a.append(i, s); g.append(a);
-  });
-  return g;
-}
-function section(title, note, list) {
-  var h = document.createElement('h2'); h.textContent = title; out.append(h);
-  if (note) { var p = document.createElement('p'); p.className = 'note'; p.textContent = note; out.append(p); }
-  out.append(grid(list));
-}
-function msg(t) { var d = document.createElement('div'); d.className = 'empty'; d.textContent = t; out.append(d); }
-function run(q) {
-  out.textContent = ''; shown = 0; more.hidden = false; more.textContent = '전체 사진 보기';
-  var r = BibSearch.search(P, q);
-  if (!r) { msg('배번을 3자리 이상 입력해 주세요. 예: E-19121 또는 19121'); return; }
-  if (r.exact.length) section('찾은 사진 ' + r.exact.length + '장', '', r.exact);
-  if (r.maybe.length) section('혹시 이 사진인가요? ' + r.maybe.length + '장', '번호 일부가 다르거나 잘려서 읽힌 사진입니다. 다른 분의 사진일 수 있습니다.', r.maybe);
-  if (!r.exact.length && !r.maybe.length) msg('이 번호로 찾은 사진이 없습니다. 배번이 가려진 사진일 수 있으니 전체 사진 보기를 이용해 주세요.');
-}
-document.getElementById('f').addEventListener('submit', function (e) {
-  e.preventDefault();
-  var q = document.getElementById('q').value.trim();
-  run(q);
-  try { history.replaceState(null, '', '#' + encodeURIComponent(q)); } catch (_) {}
-});
-more.addEventListener('click', function () {
-  if (!shown) { out.textContent = ''; var h = document.createElement('h2'); h.textContent = '전체 사진'; out.append(h); }
-  out.append(grid(P.slice(shown, shown + PAGE))); shown += PAGE;
-  more.textContent = '더 보기'; more.hidden = shown >= P.length;
-});
-var h0 = decodeURIComponent(location.hash.slice(1));
-if (h0) { document.getElementById('q').value = h0; run(h0); }
-</script>
+<p><a href="https://meanfoto.com/2026-jtbc">사진 찾기 페이지가 옮겨졌습니다. 여기를 눌러 이동해 주세요.</a></p>
 </body>
 </html>
